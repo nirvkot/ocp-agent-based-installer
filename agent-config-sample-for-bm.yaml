@@ -1,0 +1,94 @@
+apiVersion: v1alpha1
+kind: AgentConfig
+metadata:
+  name: 5d5jl
+rendezvousIP: 192.168.166.12
+hosts:
+  - hostname: master-vm1
+    interfaces:
+      - name: ens192
+        macAddress: 00:50:56:a2:41:91
+    rootDeviceHints:
+      deviceName: /dev/sda
+    networkConfig:
+      interfaces:
+        - name: ens192
+          type: ethernet
+          state: up
+          mac-address: 00:50:56:a2:41:91
+          ipv4:
+            enabled: true
+            address:
+              - ip: 192.168.166.12
+                prefix-length: 24
+            dhcp: false
+      dns-resolver:
+        config:
+          server:
+            - 10.2.192.12
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: 192.168.166.1
+            next-hop-interface: ens192
+            table-id: 254
+  - hostname: master-vm2
+    interfaces:
+      - name: ens192
+        macAddress: 00:50:56:a2:d2:db
+    rootDeviceHints:
+      deviceName: /dev/sda
+    networkConfig:
+      interfaces:
+        - name: ens192
+          type: ethernet
+          state: up
+          mac-address: 00:50:56:a2:d2:db
+          ipv4:
+            enabled: true
+            dhcp: true
+  - hostname: master-vm3
+    interfaces:
+      - name: ens192
+        macAddress: 00:50:56:a2:a7:db
+    rootDeviceHints:
+      deviceName: /dev/sda
+    networkConfig:
+      interfaces:
+        - name: ens192
+          type: ethernet
+          state: up
+          mac-address: 00:50:56:a2:a7:db
+          ipv4:
+            enabled: true
+            dhcp: true
+  - hostname: worker-vm1
+    interfaces:
+      - name: ens192
+        macAddress: 00:50:56:a2:f0:bc
+    rootDeviceHints:
+      deviceName: /dev/sda
+    networkConfig:
+      interfaces:
+        - name: ens192
+          type: ethernet
+          state: up
+          mac-address: 00:50:56:a2:f0:bc
+          ipv4:
+            enabled: true
+            dhcp: true
+  - hostname: worker-vm2
+    interfaces:
+      - name: ens192
+        macAddress: 00:50:56:a2:40:59
+    rootDeviceHints:
+      deviceName: /dev/sda
+    networkConfig:
+      interfaces:
+        - name: ens192
+          type: ethernet
+          state: up
+          mac-address: 00:50:56:a2:40:59
+          ipv4:
+            enabled: true
+            dhcp: true          
