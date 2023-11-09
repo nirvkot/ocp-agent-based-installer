@@ -1,0 +1,76 @@
+apiVersion: v1
+baseDomain: dynamic.opentlc.com
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
+  name: worker
+  replicas: 2
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+metadata:
+  name: 5d5jl
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 192.168.166.0/24
+  networkType: OVNKubernetes
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  baremetal:
+    hosts:
+      - name: master-vm1
+        role: master
+        bootMACAddress: 00:50:56:a2:41:91
+      - name: master-vm2
+        role: master
+        bootMACAddress: 00:50:56:a2:d2:db
+      - name: master-vm3
+        role: master
+        bootMACAddress: 00:50:56:a2:a7:db
+      - name: worker-vm1
+        role: worker
+        bootMACAddress: 00:50:56:a2:f0:bc
+      - name: worker-vm2
+        role: worker
+        bootMACAddress: 00:50:56:a2:40:59
+    apiVIP: "192.168.166.201"
+    ingressVIP: "192.168.166.202"
+pullSecret: '{"auths":{"bastion.5d5jl.dynamic.opentlc.com:8443":{"auth":"aW5pdDoxcG1oNk1jOTVrMjRhMEpHRGpDZDhmN0FWM1JFeW5JWQ==","email":"you@example.com"}}}'
+sshKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCu0+5pY5GvAiKi49I+q4sKSTeAq/UMFUytROngpHLNKx2WzTPFbJTiUCMFGJl/oVnG9zvtXZ+tFSG5OAsk0jlzIyIKTK8eewJhNWyNddNjQU8KVKLFcLEuZNsSlDO84zCCdI4cWlJllXFqehLmd2IiPrimiRXckb4z4biXGmQOfTuYUXFz+oOfj8IwksWqOmSc+x48UXQeozvTOFghXbA0HHBxYLrwQvx/YFJp6V2zQjWRhCLesbwu6f4ErUVZ8QJpY8YTbx5QehcDqXJhA5j2BhujGcP8sLrVjH7C2uoDg1tM8y+U28pZiyqbHoiLct9Teor1k2faVxl9ORxcgQnfTjQTqGzlx1I6OE1EpYI3FahcqKUINIeyHmC39+rv6mthcxLSYmDZZ0FnToqzcPZv/yX8Tp241ZUtl54H1fiXP8vQjfMvc0V5B8ZW2ISaF0VmSM8nOzEo5slHPwawoNw7cb30NR2vNRhhSmhw1xUG804aGrA6Ut9t3cyxzwJJ510= root@bastion'
+imageContentSources:
+- mirrors:
+  - bastion.5d5jl.dynamic.opentlc.com:8443/ocp-images/openshift-4.13.17
+  source: quay.io/openshift-release-dev/ocp-release
+- mirrors:
+  - bastion.5d5jl.dynamic.opentlc.com:8443/ocp-images/openshift-4.13.17
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+additionalTrustBundle: |
+  -----BEGIN CERTIFICATE-----
+  MIID6jCCAtKgAwIBAgIUNTQcWs3BG2Z+mmug9swbOcE7u6swDQYJKoZIhvcNAQEL
+  BQAwezELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAlZBMREwDwYDVQQHDAhOZXcgWW9y
+  azENMAsGA1UECgwEUXVheTERMA8GA1UECwwIRGl2aXNpb24xKjAoBgNVBAMMIWJh
+  c3Rpb24uNWQ1amwuZHluYW1pYy5vcGVudGxjLmNvbTAeFw0yMzExMDYxODI4MTFa
+  Fw0yNjA4MjYxODI4MTFaMHsxCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJWQTERMA8G
+  A1UEBwwITmV3IFlvcmsxDTALBgNVBAoMBFF1YXkxETAPBgNVBAsMCERpdmlzaW9u
+  MSowKAYDVQQDDCFiYXN0aW9uLjVkNWpsLmR5bmFtaWMub3BlbnRsYy5jb20wggEi
+  MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDIVUnDWQiYFepHnYcTSRsjK9+r
+  2NI/BT3eSMkZRqqnLJKB5e3+vTUyJhJ1/WEf6L0COurPdlw4tPsC0fvy9XUpeyB0
+  DARv7VdCS9T1z4B2l2f+CqlQGNKfRyx0zZTW5LL0bNA1ZL7WdbF5r5BqX2FSIvGH
+  KzPwKHI5VrDrcKK4wuPgZAHjXCwMyQogVGlAIzGoWPNtzbXlkGqjL9xNzW15FwEl
+  52/2AhtuQe55ENqo0eLtV+oZ7Xat24aF4f1pqT889pkMIlYf17fmf1jG+CPyJL8u
+  Ec4NI5OC+/mY4EJrPQadgoHE/XSInOo2oEk0sfAW9o37qlh0Gzx5TbN3lfqLAgMB
+  AAGjZjBkMAsGA1UdDwQEAwIC5DATBgNVHSUEDDAKBggrBgEFBQcDATAsBgNVHREE
+  JTAjgiFiYXN0aW9uLjVkNWpsLmR5bmFtaWMub3BlbnRsYy5jb20wEgYDVR0TAQH/
+  BAgwBgEB/wIBATANBgkqhkiG9w0BAQsFAAOCAQEAWXXxVjiGvAfXfVF3wTKJKEbY
+  2QowD3OfZiPIcoO+QRuGGN13yIIq4Vc49Dgug/WJZ2kLuwvmsKLOZfsg/YPhPjkD
+  o/z1G2yDucc/Mx7e5mCt5cbBTCGgsBpmanJQSAv1/OVq6qWaKdMz1KIXd3P4fbBD
+  hw9/PlpsrPvAktLcp2rZSIhtcABztfLZiDQfFRh4Hvzs0uGlD5hNY/AjgyhESowi
+  BcZJLR0aF9PDu8Lb+ip9hNQiOToG+dLyJs24HC0nMEBvRlGCvAgI+lcW8sdwFMB7
+  9LW/oVtQCEKRLkWDdWvyNnGWf8217jqXn/+suSy5HKHiKilXuPUcBLzKc3ifFQ==
+  -----END CERTIFICATE-----
